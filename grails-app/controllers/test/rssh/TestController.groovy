@@ -1,6 +1,7 @@
 package test.rssh
 
-import grails.plugin.remotessh.RemoteSCP
+import ssh.RemoteSCP
+
 import grails.plugin.remotessh.RemoteSSH
 import grails.plugin.remotessh.RsshValidate
 import ch.ethz.ssh2.Connection
@@ -22,21 +23,26 @@ class TestController {
 		render view: 'runCommand', model: [usercommand:usercommand]
 	}
 
-	def testScp() {
-		RemoteSCP rscp=new RemoteSCP()
 
+	def testScp() {
+		
+		RemoteSCP rscp1=new RemoteSCP("localhost", "username", "password", "/tmp/Kispálés.txt", "/tmp/vh", 22,'UTF-8','0600')
+		
+		/*
+		RemoteSCP rscp=new RemoteSCP()
+		
 		rscp.host = "localhost"
 		rscp.user = "username"
 		rscp.port=22
 		rscp.userpass="password"
-		//rscp.file = "/tmp/Kispálés.txt"
+		//scp.file = "/tmp/Kispálés.txt"
 		rscp.file = "/tmp/bahh.txt"
 		rscp.remotedir = "/tmp/vh"
-		//rscp.charsetName='UTF-8'
-		def result=rscp.Result(sshConfig)
-		println "ch ${rscp.charsetName}"
+		*/
+		//rscp.charsetName='UTF-8'		
+		def result=rscp1.Result(sshConfig)
 		render result
-
+		
 	}
 	def scpDir() {
 		render view: 'scpDir'
@@ -75,7 +81,7 @@ class TestController {
 						hasConnection=false
 						output = rsshService.executeCommand(sess, session.conn,  'echo -n', pm.splitter, pm.sudo, '|', hasConnection)
 					}
-				}
+				}	
 			}
 		}catch(Exception e) {
 			output << e.message
@@ -90,7 +96,7 @@ class TestController {
 		session.connected=null
 		render "all reset"
 	}
-
+	
 	def oldMethod() {
 		RemoteSSH rsh = new RemoteSSH()
 		rsh.setHost('localhost')

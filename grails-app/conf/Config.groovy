@@ -115,6 +115,8 @@ log4j.main = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+//New Way Controller supports host from config file
+remotessh.HOST = "localhost"
 remotessh.USER = "mx1"
 remotessh.PASS=""
 remotessh.KEY="/home/mx1/.ssh/id_rsa"
