@@ -100,6 +100,8 @@ class TestController {
 	def oldMethod() {
 		RemoteSSH rsh = new RemoteSSH()
 		rsh.setHost('localhost')
+		//rsh.user='username'
+		//rsh.userpass='password'
 		rsh.setPort(22)
 		rsh.setUsercommand('whoami')
 		def g = rsh.Result(sshConfig)
