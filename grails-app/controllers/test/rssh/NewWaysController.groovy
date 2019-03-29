@@ -31,7 +31,7 @@ class NewWaysController {
 		//SSHUtil sshUtil = sshUtilService.initialise('localhost',22) //where this is false meaning remains open
 		//SSHUtil sshUtil = sshUtilService.initialise('username','password','localhost',22,singleInstance)
 		//SSHUtil sshUtil = sshUtilService.initialise('username','keyfile','keyFilePass','localhost',22,singleInstance)
-		SSHUtil sshUtil = sshUtilService.initialise('username','password','localhost',22 as int,singleInstance)
+		SSHUtil sshUtil = sshUtilService.initialise('username','password','localhost',22,singleInstance)
 		
 		// Or.... instantiate SSHUtil Directly like above but 
 		// SSHUtil sshUtil = new SSHUtil().initialise
@@ -88,8 +88,8 @@ class NewWaysController {
 		output.writeFile6 =sshUtilService.putFile(sshUtil,'/tmp/Kispálés3.txt','/tmp/backup-test-new/')
 
 		//uploads  a bunch of files 
-		output.writeFile7 =sshUtilService.putFiles(sshUtil,['/tmp/test4.txt','/tmp/test5.txt'],'/tmp/backup-test-new/')
-		output.writeFile7 =sshUtil.putFiles(['/tmp/test6.txt','/tmp/test7.txt'],'/tmp/backup-test-new/')
+		output.writeFile7 =sshUtilService.putFiles(sshUtil,['/tmp/test4.txt','/tmp/test5.txt'],'/tmp/backup-test-new')
+		output.writeFile7 =sshUtil.putFiles(['/tmp/test6.txt','/tmp/test7.txt'],'/tmp/backup-test-new')
 		
 		//Pretending to get remoteFile and storing locally
 		output.getRemoteFile1 =sshUtilService.getFile(sshUtil,'/tmp/backup-test-new/remote-file-example.txt','/tmp/')
@@ -118,6 +118,26 @@ class NewWaysController {
 		
 		output.createDir1=sshUtilService.createRemoteDirs(sshUtil,'/tmp/remote/1/2/3')
 		output.createDir2=sshUtil.createRemoteDirs('/tmp/remote/3/4/5')
+		
+		/**
+		 * How to use your own custom configuration file mapping - we are replacing the default
+		 * remotessh grails config with mySshConfigVar part of 0.11 release
+		 */
+		
+		SSHUtil sshUtil1 = new SSHUtil()
+		sshUtil1.configVariable='mySshConfigVar'
+		sshUtil1.initialise
+		// sshUtil.initialise('someHost',22)
+		sshUtil1.localFile='/tmp/test2.txt'
+		boolean doesItExist = sshUtil.fileExists()
+		println "file exists = ${doesItExist}"
+		sshUtil1.deleteRemoteFile('/tmp/test2.txt')
+		doesItExist = sshUtil1.fileExists()
+		println "file exists = ${doesItExist}"
+		
+		//sshUtilService.disconnect(sshUtil)
+		
+		sshUtil.disconnect()
 		
 		render output as JSON
 	}

@@ -122,3 +122,12 @@ remotessh.PASS=""
 remotessh.KEY="/home/mx1/.ssh/id_rsa"
 remotessh.KEYPASS=""
 remotessh.PORT="22"
+
+//0.11 new customised config values can be defined 
+
+mySshConfigVar.HOST = "localhost"
+mySshConfigVar.USER = "mx1"
+mySshConfigVar.PASS="somePass"
+//mySshConfigVar.KEY="/home/mx1/.ssh/id_rsa"
+//mySshConfigVar.KEYPASS=""
+mySshConfigVar.PORT="22"
